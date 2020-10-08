@@ -2,7 +2,7 @@ var HTTP_PORT = process.env.PORT || 8080;
 function onHttpStart() {
   console.log("Express http server listening on: " + HTTP_PORT);
 }
-var run = require("./run.js");
+//var run = require("./run.js");
 var express = require("express");
 var app = express();
 var path = require('path');
@@ -13,13 +13,14 @@ const cron = require('node-cron');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 let todaysdate = new Date();
-app.use(express.static(path.join(__dirname, "public", 'public')));
+//Sets handlebars configurations (we will go through them later on)
+app.use(express.static('public'))
 //app.use(express.static(path.join(__dirname, "/views", 'public' )));
 
 cron.schedule(' 0 */30 * * * * ', () =>{
 
       console.log("in cron");
-      run.run();
+      //run.run();
 
 }); 
 
@@ -70,7 +71,7 @@ app.get("/controlrobot", (req,res) => {
                 console.log(homegrown.cycle);
                 fs.writeFileSync("data.json" , JSON.stringify(homegrown));
                 console.log("changed");
-                run.run();
+                //run.run();
                 
 
     
@@ -84,6 +85,6 @@ app.get("/controlrobot", (req,res) => {
 
 
   app.listen(HTTP_PORT, onHttpStart);
-   run.run();
+   //run.run();
 
   
